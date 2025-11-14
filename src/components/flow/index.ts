@@ -5,3 +5,6 @@ export { NavigationButtons, SecondaryButton } from './NavigationButtons';
 export { SummaryCard } from './SummaryCard';
 export { FlowContainer } from './FlowContainer';
 export { StepGroup } from './StepGroup';
+export { PaymentOption } from './PaymentOption';
+export { CreditCardForm } from './CreditCardForm';
+export { PaymentButtons } from './PaymentButtons';

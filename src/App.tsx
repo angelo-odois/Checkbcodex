@@ -6,7 +6,10 @@ import {
   StepGroup, 
   FormInput, 
   NavigationButtons,
-  SummaryCard 
+  SummaryCard,
+  PaymentOption,
+  CreditCardForm,
+  PaymentButtons
 } from './components/flow';
 import { User, CreditCard, Mail, Phone, FileText, Zap, ShieldCheck } from 'lucide-react';
 import svgPaths from "./imports/svg-qpmeuqgsy8";
@@ -71,6 +74,7 @@ function CreditCardIcon() {
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'pix' | null>(null);
   const [formData, setFormData] = useState({
     name: 'Wanderley Proença',
     email: 'wandy.proenca@gmail.com',
@@ -209,6 +213,12 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            {/* Continue Button */}
+            <NavigationButtons 
+              onNext={handleNext}
+              showBack={false}
+            />
           </>
         )}
 
@@ -217,22 +227,80 @@ export default function App() {
             <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
               <CreditCard className="size-[20px] md:size-[24px] text-[#252525]" strokeWidth={1.5} />
               <h2 className="font-['Inter:Medium',sans-serif] font-medium leading-[24px] not-italic text-[#030213] text-[16px] tracking-[-0.3125px]">
-                Forma de pagamento
+                Forma de Pagamento
               </h2>
             </div>
 
-            <div className="p-8 text-center text-[#717182]">
-              <p>Selecione sua forma de pagamento preferida</p>
+            {/* Payment Options */}
+            <div className="content-stretch flex flex-col gap-[12px] md:gap-[16px] items-start relative shrink-0 w-full">
+              {/* Credit Card Option */}
+              <PaymentOption
+                id="card"
+                icon={
+                  <svg className="size-[24px] md:size-[32px]" fill="none" viewBox="0 0 32 32">
+                    <rect width="32" height="32" rx="6" fill="#F5F5F5"/>
+                    <path d="M9 12C9 10.8954 9.89543 10 11 10H21C22.1046 10 23 10.8954 23 12V20C23 21.1046 22.1046 22 21 22H11C9.89543 22 9 21.1046 9 20V12Z" stroke="#030213" strokeWidth="1.5"/>
+                    <path d="M9 14H23" stroke="#030213" strokeWidth="1.5"/>
+                    <path d="M12 18H14" stroke="#030213" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                }
+                title="Cartão de crédito/débito"
+                description="Seus cartões salvos de forma segura"
+                selected={paymentMethod === 'card'}
+                expanded={paymentMethod === 'card'}
+                onClick={() => setPaymentMethod('card')}
+                rightContent={
+                  <div className="flex gap-[4px] items-center">
+                    <svg width="24" height="16" viewBox="0 0 24 16" fill="none">
+                      <circle cx="8" cy="8" r="7" fill="#EB001B"/>
+                      <circle cx="16" cy="8" r="7" fill="#F79E1B"/>
+                      <path d="M12 3.5C10.8 4.7 10 6.3 10 8C10 9.7 10.8 11.3 12 12.5C13.2 11.3 14 9.7 14 8C14 6.3 13.2 4.7 12 3.5Z" fill="#FF5F00"/>
+                    </svg>
+                    <svg width="30" height="10" viewBox="0 0 40 13" fill="none">
+                      <path d="M15.2 12.5L17.8 0.5H21.2L18.6 12.5H15.2Z" fill="#00579F"/>
+                      <path d="M31.8 0.8C31.1 0.5 30 0.3 28.7 0.3C25.3 0.3 23 2 23 4.5C23 6.3 24.7 7.3 26 7.9C27.3 8.5 27.8 8.9 27.8 9.4C27.8 10.2 26.8 10.6 25.9 10.6C24.6 10.6 23.9 10.4 22.9 10L22.4 9.8L21.9 12.3C22.7 12.7 24.2 13 25.8 13C29.4 13 31.6 11.3 31.6 8.7C31.6 7.3 30.6 6.2 28.5 5.4C27.3 4.9 26.6 4.5 26.6 4C26.6 3.5 27.2 3 28.5 3C29.6 3 30.4 3.2 31.1 3.5L31.4 3.6L31.8 0.8Z" fill="#00579F"/>
+                    </svg>
+                    <svg width="24" height="16" viewBox="0 0 32 20" fill="none">
+                      <rect width="32" height="20" rx="3" fill="#016FD0"/>
+                      <path d="M18.5 14V12.5H19.5V14H18.5ZM20.5 14V12.5H21.5V14H20.5ZM22.5 14V12.5H23.5V14H22.5Z" fill="white"/>
+                    </svg>
+                    <div className={`ml-2 size-[20px] md:size-[24px] rounded-full border-2 ${
+                      paymentMethod === 'card' ? 'border-[#107a3b]' : 'border-[#e4e7e4]'
+                    } flex items-center justify-center transition-colors`}>
+                      {paymentMethod === 'card' && (
+                        <div className="size-[10px] md:size-[12px] rounded-full bg-[#107a3b]" />
+                      )}
+                    </div>
+                  </div>
+                }
+              >
+                <CreditCardForm showClickToPay={true} />
+                <div className="mt-4">
+                  <PaymentButtons 
+                    onPrimaryClick={() => alert('Pagando com Click to Pay')}
+                    onSecondaryClick={() => alert('Pagando sem Click to Pay')}
+                  />
+                </div>
+              </PaymentOption>
+
+              {/* PIX Option */}
+              <PaymentOption
+                id="pix"
+                icon={
+                  <svg className="size-[24px] md:size-[32px]" fill="none" viewBox="0 0 32 32">
+                    <rect width="32" height="32" rx="6" fill="#F5F5F5"/>
+                    <path d="M19.5 12.5L16 16L12.5 12.5M12.5 19.5L16 16L19.5 19.5M16 16H16.01" stroke="#00BFA6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M21 10L11 10M11 22L21 22" stroke="#00BFA6" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                }
+                title="Pix"
+                description="Aprovação imediata"
+                selected={paymentMethod === 'pix'}
+                onClick={() => setPaymentMethod('pix')}
+              />
             </div>
           </>
         )}
-
-        {/* Continue Button */}
-        <NavigationButtons 
-          onNext={handleNext}
-          showBack={false}
-          nextDisabled={currentStep === 2}
-        />
       </StepGroup>
     </FlowContainer>
   );
