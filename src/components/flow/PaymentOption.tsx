@@ -25,19 +25,22 @@ export function PaymentOption({
 }: PaymentOptionProps) {
   return (
     <div className="relative shrink-0 w-full">
-      {/* Clickable header */}
+      {/* Main card container */}
       <div 
-        className={`bg-white relative rounded-[8px] shrink-0 w-full cursor-pointer transition-all ${
-          selected || expanded ? 'ring-2 ring-[#107a3b]' : ''
+        className={`bg-white relative rounded-[8px] shrink-0 w-full transition-all ${
+          selected || expanded ? '' : ''
         }`}
-        onClick={onClick}
       >
         <div 
           aria-hidden="true" 
           className={`absolute border ${selected || expanded ? 'border-[#107a3b]' : 'border-[#e4e7e4]'} border-solid inset-0 pointer-events-none rounded-[8px] transition-colors`} 
         />
         <div className="size-full">
-          <div className="box-border content-stretch flex items-center justify-between p-[16px] md:p-[20px] relative w-full">
+          {/* Clickable header */}
+          <div 
+            className="box-border content-stretch flex items-center justify-between p-[16px] md:p-[20px] relative w-full cursor-pointer"
+            onClick={onClick}
+          >
             {/* Left: Icon + Text */}
             <div className="content-stretch flex gap-[12px] md:gap-[16px] items-center relative">
               <div className="shrink-0 size-[32px] md:size-[40px] flex items-center justify-center">
@@ -47,7 +50,7 @@ export function PaymentOption({
                 <p className="font-['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic text-[#030213] text-[14px] md:text-[15px]">
                   {title}
                 </p>
-                {description && (
+                {description && !(selected || expanded) && (
                   <p className="font-['Inter:Regular',sans-serif] font-normal leading-[16px] not-italic text-[#717182] text-[12px] md:text-[13px]">
                     {description}
                   </p>
@@ -68,17 +71,15 @@ export function PaymentOption({
               )}
             </div>
           </div>
+
+          {/* Expanded content */}
+          {expanded && children && (
+            <div className="box-border px-[16px] md:px-[20px] pb-[16px] md:pb-[20px]">
+              {children}
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Expanded content */}
-      {expanded && children && (
-        <div className="mt-0 bg-white border-2 border-t-0 border-[#107a3b] rounded-b-[8px] -mt-[8px] pt-[8px]">
-          <div className="box-border p-[16px] md:p-[20px] pt-[8px]">
-            {children}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

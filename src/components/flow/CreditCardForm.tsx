@@ -169,7 +169,7 @@ export function CreditCardForm({ onSubmit, showClickToPay = true }: CreditCardFo
         <div className="bg-white h-[52px] md:h-[56px] relative rounded-[8px] shrink-0 w-full">
           <div aria-hidden="true" className="absolute border border-[#e4e7e4] border-solid inset-0 pointer-events-none rounded-[8px]" />
           <div className="flex flex-row items-center size-full">
-            <div className="box-border content-stretch flex h-[52px] md:h-[56px] items-center justify-between p-[14px] md:p-[18px] relative w-full">
+            <div className="box-border content-stretch flex h-[52px] md:h-[56px] items-center justify-between p-[10px] md:p-[18px] relative w-full">
               <div className="basis-0 grow min-h-px min-w-px relative shrink-0">
                 <label className="absolute top-0 left-0 font-['Inter:Medium',sans-serif] font-medium text-[#9b9b9b] text-[12px] leading-[1.25] pointer-events-none">
                   Parcelas

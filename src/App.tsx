@@ -65,7 +65,7 @@ function CreditCardIcon() {
     <div className="relative shrink-0 size-[20px] md:size-[24px]">
       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
         <g>
-          <path d={svgPaths.p26cee00} stroke="var(--stroke-0, #E4E7E4)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+          <path d={svgPaths.p26cee00} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
         </g>
       </svg>
     </div>
@@ -154,8 +154,8 @@ export default function App() {
           <StepCard
             title="Forma de pagamento"
             icon={<CreditCardIcon />}
-            status={currentStep === 2 ? 'active' : 'disabled'}
-            onClick={() => currentStep === 2 && setCurrentStep(2)}
+            status={currentStep === 2 ? 'active' : currentStep > 2 ? 'completed' : 'disabled'}
+            onClick={() => currentStep >= 2 && setCurrentStep(2)}
           />
         </div>
 
@@ -250,28 +250,28 @@ export default function App() {
                 expanded={paymentMethod === 'card'}
                 onClick={() => setPaymentMethod('card')}
                 rightContent={
-                  <div className="flex gap-[4px] items-center">
-                    <svg width="24" height="16" viewBox="0 0 24 16" fill="none">
-                      <circle cx="8" cy="8" r="7" fill="#EB001B"/>
-                      <circle cx="16" cy="8" r="7" fill="#F79E1B"/>
-                      <path d="M12 3.5C10.8 4.7 10 6.3 10 8C10 9.7 10.8 11.3 12 12.5C13.2 11.3 14 9.7 14 8C14 6.3 13.2 4.7 12 3.5Z" fill="#FF5F00"/>
-                    </svg>
-                    <svg width="30" height="10" viewBox="0 0 40 13" fill="none">
-                      <path d="M15.2 12.5L17.8 0.5H21.2L18.6 12.5H15.2Z" fill="#00579F"/>
-                      <path d="M31.8 0.8C31.1 0.5 30 0.3 28.7 0.3C25.3 0.3 23 2 23 4.5C23 6.3 24.7 7.3 26 7.9C27.3 8.5 27.8 8.9 27.8 9.4C27.8 10.2 26.8 10.6 25.9 10.6C24.6 10.6 23.9 10.4 22.9 10L22.4 9.8L21.9 12.3C22.7 12.7 24.2 13 25.8 13C29.4 13 31.6 11.3 31.6 8.7C31.6 7.3 30.6 6.2 28.5 5.4C27.3 4.9 26.6 4.5 26.6 4C26.6 3.5 27.2 3 28.5 3C29.6 3 30.4 3.2 31.1 3.5L31.4 3.6L31.8 0.8Z" fill="#00579F"/>
-                    </svg>
-                    <svg width="24" height="16" viewBox="0 0 32 20" fill="none">
-                      <rect width="32" height="20" rx="3" fill="#016FD0"/>
-                      <path d="M18.5 14V12.5H19.5V14H18.5ZM20.5 14V12.5H21.5V14H20.5ZM22.5 14V12.5H23.5V14H22.5Z" fill="white"/>
-                    </svg>
-                    <div className={`ml-2 size-[20px] md:size-[24px] rounded-full border-2 ${
-                      paymentMethod === 'card' ? 'border-[#107a3b]' : 'border-[#e4e7e4]'
-                    } flex items-center justify-center transition-colors`}>
-                      {paymentMethod === 'card' && (
-                        <div className="size-[10px] md:size-[12px] rounded-full bg-[#107a3b]" />
-                      )}
+                  paymentMethod === 'card' ? (
+                    <div className={`size-[20px] md:size-[24px] rounded-full border-2 border-[#107a3b] flex items-center justify-center transition-colors`}>
+                      <div className="size-[10px] md:size-[12px] rounded-full bg-[#107a3b]" />
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex gap-[4px] items-center">
+                      <svg width="24" height="16" viewBox="0 0 24 16" fill="none">
+                        <circle cx="8" cy="8" r="7" fill="#EB001B"/>
+                        <circle cx="16" cy="8" r="7" fill="#F79E1B"/>
+                        <path d="M12 3.5C10.8 4.7 10 6.3 10 8C10 9.7 10.8 11.3 12 12.5C13.2 11.3 14 9.7 14 8C14 6.3 13.2 4.7 12 3.5Z" fill="#FF5F00"/>
+                      </svg>
+                      <svg width="30" height="10" viewBox="0 0 40 13" fill="none">
+                        <path d="M15.2 12.5L17.8 0.5H21.2L18.6 12.5H15.2Z" fill="#00579F"/>
+                        <path d="M31.8 0.8C31.1 0.5 30 0.3 28.7 0.3C25.3 0.3 23 2 23 4.5C23 6.3 24.7 7.3 26 7.9C27.3 8.5 27.8 8.9 27.8 9.4C27.8 10.2 26.8 10.6 25.9 10.6C24.6 10.6 23.9 10.4 22.9 10L22.4 9.8L21.9 12.3C22.7 12.7 24.2 13 25.8 13C29.4 13 31.6 11.3 31.6 8.7C31.6 7.3 30.6 6.2 28.5 5.4C27.3 4.9 26.6 4.5 26.6 4C26.6 3.5 27.2 3 28.5 3C29.6 3 30.4 3.2 31.1 3.5L31.4 3.6L31.8 0.8Z" fill="#00579F"/>
+                      </svg>
+                      <svg width="24" height="16" viewBox="0 0 32 20" fill="none">
+                        <rect width="32" height="20" rx="3" fill="#016FD0"/>
+                        <path d="M18.5 14V12.5H19.5V14H18.5ZM20.5 14V12.5H21.5V14H20.5ZM22.5 14V12.5H23.5V14H22.5Z" fill="white"/>
+                      </svg>
+                      <div className={`ml-2 size-[20px] md:size-[24px] rounded-full border-2 border-[#e4e7e4] flex items-center justify-center transition-colors`} />
+                    </div>
+                  )
                 }
               >
                 <CreditCardForm showClickToPay={true} />
